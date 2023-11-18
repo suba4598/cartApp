@@ -1,22 +1,28 @@
 import React, { useContext } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { CartContext } from './cartContext';
+import { useCart } from './cartContext';
 import { products } from './products';
 
 const ConfirmPage = () => {
   const navigation = useNavigation();
-  const { cart, clearCart } = useContext(CartContext);
+  const { cart, clearCart } = useCart();
 
+  const getProductPrice = (productId) => {
+    const product = products.find((p) => p.id === parseInt(productId));
+    return product ? product.price : 0;
+  };
+  
   const calculateTotalPrice = () => {
-    const totalPrice = Object.keys(cart).reduce(
-      (total, productId) =>
-        total + cart[productId] * products.find((p) => p.id === parseInt(productId)).price,
-      0
-    );
+    let totalPrice = 0;
+    for (const productId in cart) {
+      const quantity = cart[productId];
+      const productPrice = getProductPrice(productId);
+      totalPrice += quantity * productPrice;
+    }
     return totalPrice.toFixed(2);
   };
-
+  
   const handleConfirmPage = () => {
     clearCart();
     navigation.navigate('ProductList');

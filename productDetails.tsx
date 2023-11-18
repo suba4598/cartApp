@@ -1,14 +1,13 @@
 import React, { useContext, useState } from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { CartContext } from './cartContext';
+import { useCart } from './cartContext';
 import { commonStyles } from './commonStyles';
 
 const ProductDetails = ({ route }) => {
   const navigation = useNavigation();
-
   const { product } = route.params;
-  const { addToCart, removeFromCart, cart } = useContext(CartContext);
+  const { addToCart, removeFromCart, cart } = useCart();
   const [quantity, setQuantity] = useState(cart[product.id] || 0);
 
   const handleAddToCart = () => {
