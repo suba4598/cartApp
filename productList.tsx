@@ -17,23 +17,26 @@ const ProductList = () => {
     navigation.navigate('ConfirmPage');
   };
 
-  const renderProductItem = ({ item }) => (
-    <View style={styles.productItem}>
-      <TouchableOpacity onPress={() => navigateToProductDetails(item)}>
-        <Text style={styles.productName}>{item.name}</Text>
-        <Text style={styles.productPrice}>${item.price}</Text>
-      </TouchableOpacity>
-      <View style={styles.quantityContainer}>
-        <TouchableOpacity onPress={() => addToCart(item.id)}>
-          <Text style={styles.quantityButton}>+</Text>
+  const renderProductItem = ({ item }) => {
+    return (
+      <View style={styles.productItem}>
+        <TouchableOpacity onPress={() => navigateToProductDetails(item)}>
+          <Text style={styles.productName}>{item.name}</Text>
+          <Text style={styles.productPrice}>${item.price}</Text>
         </TouchableOpacity>
-        <Text style={styles.quantityText}>{cart[item.id] || 0}</Text>
-        <TouchableOpacity onPress={() => removeFromCart(item.id)}>
-          <Text style={styles.quantityButton}>-</Text>
-        </TouchableOpacity>
+        <View style={styles.quantityContainer}>
+          <TouchableOpacity onPress={() => addToCart(item.id)}>
+            <Text style={styles.quantityButton}>+</Text>
+          </TouchableOpacity>
+          <Text style={styles.quantityText}>{cart[item.id] || 0}</Text>
+          <TouchableOpacity onPress={() => removeFromCart(item.id)}>
+            <Text style={styles.quantityButton}>-</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-  );
+    );
+  };
+  
 
   return (
     <View style={[commonStyles.container, { backgroundColor: '#F2F2F2' }]}>
